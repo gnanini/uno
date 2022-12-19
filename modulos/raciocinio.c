@@ -8,6 +8,7 @@ typedef struct {
     char cor[4];
 }Carta;
 
+
 void debugNum(int message) {
   fprintf(stderr, "%d\n", message);
 }
@@ -65,6 +66,7 @@ int getCards(int n, char* mao, int nC, Carta* listCards)
 }
 
 
+
 int getHand(int size, char* mao, Carta* listCards)
 {
     Carta mesa[1];
@@ -110,16 +112,42 @@ void discard(Carta card, int nC, Carta* listCards)
 {
     Carta temp[nC-1];
     int k = 0;
+    debug("-----DISCARD----");
+    showCard(card);
+
+    printf("DISCARD %s%s\n", card.num, card.cor);
     for (int i = 0; i < nC; i++)
     {
-        if (strcmp(card.cor, listCards[i].cor) == 1 && strcmp(card.num, listCards[i].num) == 1)
+        if (strcmp(card.cor, listCards[i].cor) == 1 || strcmp(card.num, listCards[i].num) == 1)
         {
+            showCard(listCards[i]);
             temp[k] = listCards[i]; 
             k++;
         }
     }
     for (int i = 0; i < nC-1; i++)
+    {
         listCards[i] = temp[i];
+        //debugChar(listCards[i].num[0]);
+        //debug(listCards[i].cor);
+    }
+}
+
+
+int compraCarta(int n, int nC, Carta* listCards)
+{
+    char strcarta[n][6];
+    Carta cards[n];
+    debug("-----COMPRA CARTA----");
+    printf("BUY %d/n", n);
+    for (int i = 0; i < n; i++)
+    {
+        scanf(" %s", strcarta[i]);
+        debug(strcarta[i]);
+    }
+    for (int i = nC; i < nC + n; i++)
+        listCards[i] = cards[i-nC];
+    return nC-n;
 }
 
 
@@ -135,7 +163,8 @@ int pensaJogada(int nC, Carta mesa[1], Carta *listCards)
             nCor++;
 
         //if (listCards[i].num == mesa[0].num)
-        if (strcmp(listCards[i].num, mesa[0].num) == 0)
+    
+    if (strcmp(listCards[i].num, mesa[0].num) == 0)
             nNum++;
     }
     debug("nCor e nNum");
@@ -144,26 +173,29 @@ int pensaJogada(int nC, Carta mesa[1], Carta *listCards)
     // avalia se vai por número ou vai por cor
     if (strcmp(mesa[0].num, "V") == 0)
     {
-        printf("BUY 2\n");
-        return nC + 2;
+        //printf("BUY 2\n");
+        nC = compraCarta(2, nC, listCards);
+        return nC;
     }
     else if (strcmp(mesa[0].num, "C") == 0)
     {
-        printf("BUY 4\n");
-        return nC + 2;
+        //printf("BUY 4\n");
+        nC = compraCarta(4, nC, listCards);
+        return nC;
     }
     else if (nCor == 0 && nNum == 0) // nesse caso vai comprar
     {
-        printf("BUY 1\n");
+        //printf("BUY 1\n");
+        nC = compraCarta(1, nC, listCards);
         //return listCards[50];
-        return nC + 1;
+        return nC;
     }
     else if (nCor >= nNum)
     {
         for (int i = 0; i < nC; ++i)
             if (strcmp(listCards[i].cor, mesa[0].cor) == 0)
             {
-                printf("DISCARD %s%s\n", listCards[i].num, listCards[i].cor);
+                //printf("DISCARD %s%s\n", listCards[i].num, listCards[i].cor);
                 discard(listCards[i], nC, listCards);
                 //return listCards[i];
                 return nC - 1;
@@ -174,7 +206,7 @@ int pensaJogada(int nC, Carta mesa[1], Carta *listCards)
         for (int i = 0; i < nC; ++i)
             if (strcmp(listCards[i].num, mesa[0].num) == 0)
             {
-                printf("DISCARD %s%s\n", listCards[i].num, listCards[i].cor);
+                //printf("DISCARD %s%s\n", listCards[i].num, listCards[i].cor);
                 discard(listCards[i], nC, listCards);
                 //return listCards[i];
                 return nC - 1;

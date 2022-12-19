@@ -76,7 +76,6 @@ int main() {
     //debug("----MESA SIZE----");
     //debugNum(strlen(mesa));
 
-
     // === PARTIDA ===
 
     char id[MAX_ID_SIZE];
@@ -91,6 +90,9 @@ int main() {
     sizeHand = strlen(hand);
     Carta listCards[51];
     int nC; // numero de cartas
+
+
+
 
     nC = getHand(sizeHand, hand, listCards);
     for (int i = 0; i < nC; i++)
@@ -153,7 +155,6 @@ int main() {
                 }
             }
 
-
             /*            
             Há um evento especial que não é gerado pelos outros bots, mas pelo simulador.
             Ele tem o formato: "TURN <id>".
@@ -178,7 +179,7 @@ int main() {
         Depois do envio desta ação, o simulador irá enviar para o seu bot uma quantidade de cartas
         correspondente ao número solicitado. Então, prepare-se para ler da entrada padrão as cartas.
         Se a ação for "BUY 2", leia duas strings. Elas serão as cartas compradas e você deve
-        guardá-las na sua mão. Se for "BUY 4", leia 4 strings.
+        guardá-las naCarta card sua mão. Se for "BUY 4", leia 4 strings.
         Depois da leitura, termina a vez do seu bot e o simulador passa a vez para um outro bot.
 
         Caso não tenha nenhuma ação de compra a ser realizada, seu bot deve jogar normalmente,
@@ -236,7 +237,8 @@ int main() {
             SAY Droga!
             BUY 2
             BUY 4
-            BUY 1
+            BUY 
+    }1
 
         OBS: Todas as mensagens enviadas **DEVEM terminar com salto de linha ('\n')**, caso
                  contrário, o simulador não saberá quando uma ação termina e quebrar o sincronização
@@ -277,6 +279,11 @@ int main() {
         //debug("DESCARTO:"); isso tá defasado, sujeito a dd
         //showCard(carta);
     }
+
+
+
+
+
     return 0;
 }
 
